@@ -1,0 +1,27 @@
+meta {
+  name: 10.- calificar viaje
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{BASE_URL}}/clientes/calificar-viaje
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/vnd.api+json
+}
+
+body:json {
+  {
+      "viaje_id": 3,
+      "calificacion": 3,
+      "observacion": "this si the comment"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

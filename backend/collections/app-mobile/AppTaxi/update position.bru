@@ -1,0 +1,32 @@
+meta {
+  name: update position
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{BASE_URL}}/taxis/update-position/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  // valido
+  // {
+  //     "latitude": "-17.3753982",
+  //     "longitude": "-66.1994676"
+  // }
+  // invalido
+  {
+      "latitude": "-18.073463",
+      "longitude": "-63.308323"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

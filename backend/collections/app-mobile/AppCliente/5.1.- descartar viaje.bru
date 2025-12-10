@@ -1,0 +1,25 @@
+meta {
+  name: 5.1.- descartar viaje
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BASE_URL}}/clientes/descartar-viaje
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/vnd.api+json
+}
+
+body:json {
+  {
+      "viaje_taxi_id": 145
+  }
+}
+
+settings {
+  encodeUrl: true
+}

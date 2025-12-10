@@ -1,0 +1,15 @@
+meta {
+  name: Load test socketio
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://api.jetgo.local:8080/api/test-socketio
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

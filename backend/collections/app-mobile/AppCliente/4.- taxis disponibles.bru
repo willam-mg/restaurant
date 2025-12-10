@@ -1,0 +1,30 @@
+meta {
+  name: 4.- taxis disponibles
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/clientes/taxis-disponibles?page=1&perPage=4
+  body: json
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  perPage: 4
+}
+
+headers {
+  Accept: application/vnd.api+json
+}
+
+body:json {
+  {
+      "viaje_id": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

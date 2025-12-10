@@ -1,0 +1,32 @@
+meta {
+  name: sing in taxi
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/auth/taxi
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "codigo":"5376",
+      "player_id": "3424324-432432-432-432-432-432432"
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

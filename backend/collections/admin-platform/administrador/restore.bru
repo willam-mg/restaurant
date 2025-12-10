@@ -1,0 +1,25 @@
+meta {
+  name: restore
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{BASE_URL}}/administradores/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

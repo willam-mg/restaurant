@@ -1,0 +1,25 @@
+meta {
+  name: 6.5.- voy en camino
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{BASE_URL}}/clientes/on-my-way
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/vnd.api+json
+}
+
+body:json {
+  {
+      "viaje_id": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

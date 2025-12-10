@@ -1,0 +1,32 @@
+meta {
+  name: sing in cliente
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/auth/cliente
+  body: json
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "codigo":"6828",
+      "player_id": "34324-43242-43242-432432-432432-4334343"
+  }   
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

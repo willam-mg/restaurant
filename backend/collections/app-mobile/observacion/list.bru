@@ -1,0 +1,29 @@
+meta {
+  name: list
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{BASE_URL}}/observaciones/list?taxi_id=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  taxi_id: 1
+}
+
+headers {
+  Accept: application/json
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

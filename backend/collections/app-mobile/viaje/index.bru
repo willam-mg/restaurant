@@ -1,0 +1,30 @@
+meta {
+  name: index
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{BASE_URL}}/viajes?estado=ofertado&tipo_vehiculo=taxi
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado: ofertado
+  tipo_vehiculo: taxi
+}
+
+headers {
+  Accept: application/json
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

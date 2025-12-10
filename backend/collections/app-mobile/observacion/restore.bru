@@ -1,0 +1,32 @@
+meta {
+  name: restore
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{BASE_URL}}/observaciones/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "plataforma": "android",
+      "version": "1.1.0"
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

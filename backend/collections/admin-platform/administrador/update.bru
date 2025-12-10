@@ -1,0 +1,32 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/administradores/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "nombre_completo": "Juanita la huerfanita x2",
+      "email": "juanita@lahuerfanita.com"
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

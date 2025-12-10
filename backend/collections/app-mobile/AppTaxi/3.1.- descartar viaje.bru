@@ -1,0 +1,26 @@
+meta {
+  name: 3.1.- descartar viaje
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/taxis/aplicar
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "viaje_id": 1,
+      "taxi_id": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}

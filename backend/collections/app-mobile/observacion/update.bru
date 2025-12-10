@@ -1,0 +1,33 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/observaciones/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "attribute": "nombre",
+      "observacion": "no es lo crrecto",
+      "estado_revision": 1
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

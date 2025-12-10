@@ -1,0 +1,25 @@
+meta {
+  name: destroy
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{BASE_URL}}/clientes/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

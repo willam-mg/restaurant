@@ -1,0 +1,25 @@
+meta {
+  name: 8.- iniciar viaje
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{BASE_URL}}/taxis/iniciar-viaje
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "viaje_id": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,27 @@
+meta {
+  name: 3.- aplicar
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/taxis/aplicar
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "viaje_id": 4,
+      "taxi_id": 1,
+      "tarifa_propuesta_taxi": 10
+  }
+}
+
+settings {
+  encodeUrl: true
+}

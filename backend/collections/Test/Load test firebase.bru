@@ -1,0 +1,15 @@
+meta {
+  name: Load test firebase
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://api.jetgo.local:8080/api/test-firebase
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,25 @@
+meta {
+  name: 6.- recojer cliente
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BASE_URL}}/taxis/recoger-cliente
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "viaje_id": 4
+  }
+}
+
+settings {
+  encodeUrl: true
+}

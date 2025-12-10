@@ -1,0 +1,22 @@
+image: atlassian/default-image:3
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Deploy Laravel API to BanaHosting
+          script:
+            # Instalar lftp para subir por FTP
+            - apt-get update && apt-get install -y lftp
+
+            # Subir solo cambios al servidor
+            - lftp -c "set ftp:list-options -a;
+                      open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
+                      mirror --reverse \
+                            --delete \
+                            --verbose \
+                            --exclude-glob node_modules/ \
+                            --exclude-glob vendor/ \
+                            --exclude-glob .git/ \
+                            --exclude-glob .env.example \
+                            ./ $FTP_PATH"

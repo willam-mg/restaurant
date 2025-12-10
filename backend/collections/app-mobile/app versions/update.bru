@@ -1,0 +1,33 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/versions/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "plataforma": "android",
+      "version": "1.1.0",
+      "under_review": true
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

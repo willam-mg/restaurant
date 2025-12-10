@@ -1,0 +1,28 @@
+meta {
+  name: update position with ride ID
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{BASE_URL}}/taxis/update-position/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "latitude": "-17.3753982",
+      "longitude": "-66.1994676",
+      "viaje_id": 1
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,57 @@
+meta {
+  name: store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/viajes
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "lugar_origen": "Avenida america",
+      "lugar_destino": "Avenida america",
+      "origen_latitude": "-17.398691",
+      "origen_longitude": "-66.163545",
+      "destino_latitude": "-17.400398",
+      "destino_longitude": "-66.140818",
+      "tarifa_ideal": "20",
+      "tarifa_propuesta_cliente": "20",
+      "tarifa_propuesta_taxi": "20",
+      "tarifa_final": "10",
+      "comentario": "tiene parrilla para un mueble",
+      "fecha_aceptado": null,
+      "hora_aceptado": null,
+      "fecha_recojo": null,
+      "hora_recojo": null,
+      "fecha_cancelado": null,
+      "hora_cancelado": null,
+      "fecha_concludido": null,
+      "hora_concluido": null,
+      "calificacion": null,
+      "porcentaje_comision": 0.05,
+      "porcentaje_comision_empresa": 0.03,
+      "estado": null,
+      "tipo_pago": null,
+      "observacion": null,
+      "taxi_id": null,
+      "cliente_id": 1
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(201);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

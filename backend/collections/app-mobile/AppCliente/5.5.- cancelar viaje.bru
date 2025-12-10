@@ -1,0 +1,26 @@
+meta {
+  name: 5.5.- cancelar viaje
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{BASE_URL}}/clientes/cancelar-viaje
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/vnd.api+json
+}
+
+body:json {
+  {
+      "viaje_id": 1,
+      "motivo_cancelacion": "donde esta mi cocolsssssssss"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

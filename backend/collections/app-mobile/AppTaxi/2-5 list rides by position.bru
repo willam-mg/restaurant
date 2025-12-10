@@ -1,0 +1,33 @@
+meta {
+  name: 2-5 list rides by position
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}/viajes/by-position?estado=ofertado&tipo_vehiculo=taxi&currentLat=-17.380026&currentLng=-66.201440&perPage=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  estado: ofertado
+  tipo_vehiculo: taxi
+  currentLat: -17.380026
+  currentLng: -66.201440
+  perPage: 10
+}
+
+headers {
+  Accept: application/json
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

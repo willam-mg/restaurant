@@ -1,0 +1,25 @@
+meta {
+  name: 5.- confirmar viaje
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BASE_URL}}/clientes/confirmar-viaje
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/vnd.api+json
+}
+
+body:json {
+  {
+      "viaje_taxi_id": 4
+  }
+}
+
+settings {
+  encodeUrl: true
+}

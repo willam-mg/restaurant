@@ -1,0 +1,25 @@
+meta {
+  name: 7.- acaba de llegar
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{BASE_URL}}/taxis/acaba-de-llegar
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "viaje_id": 4
+  }
+}
+
+settings {
+  encodeUrl: true
+}

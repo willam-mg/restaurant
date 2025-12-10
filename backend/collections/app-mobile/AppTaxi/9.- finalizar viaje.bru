@@ -1,0 +1,25 @@
+meta {
+  name: 9.- finalizar viaje
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{BASE_URL}}/taxis/finalizar-viaje
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "viaje_id": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

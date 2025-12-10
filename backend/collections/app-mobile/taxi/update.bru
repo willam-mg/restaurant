@@ -1,0 +1,52 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/taxis/2
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+          "nombre": "leopoldo",
+          "apellido": "nepumuzeno de la cruz",
+          "celular": "78978978",
+          "ci": "78978978",
+          "email": "nepumuzeno@gmail.com",
+          "fehca_nacimiento": "1992-02-01",
+          "src_foto": "",
+          "credito_disponible": 0,
+          "calificacion": 0,
+          "player_id": "fldsjl;fjdlsjf798798",
+          "latitude": "",
+          "longitude": "",
+          "car_color": "red",
+          "numero_licencia": "8899900",
+          "modelo_auto": "DFD - 898a",
+          "numero_placa": "KPT - 1092",
+          "tipo_vehiculo": "taxi",
+          "src_licencia_amberso": "",
+          "src_licencia_reverso": "",
+          "src_soat": "",
+          "src_foto_vehiculo": "",
+          "src_ruat": ""
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

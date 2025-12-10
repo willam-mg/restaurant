@@ -1,0 +1,31 @@
+meta {
+  name: send code verification
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/auth/send-code
+  body: json
+  auth: none
+}
+
+headers {
+  Accep: json
+}
+
+body:json {
+  {
+      "celular":"75977665"
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

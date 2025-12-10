@@ -1,0 +1,49 @@
+meta {
+  name: 2.- create viaje
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/viajes
+  body: json
+  auth: bearer
+}
+
+headers {
+  Accept: application/json
+}
+
+auth:bearer {
+  token: {{API_KEY}}
+}
+
+body:json {
+  {
+     "lugar_origen":"Dirección inicial: Mi ubicación",
+     "lugar_destino":"Calle Idelfonso Murguía y La Glorieta",
+    // Out of coverage
+  //    "origen_latitude": "-18.073463",
+  //    "origen_longitude": "-63.308323",
+    // Inside coverage
+     "origen_latitude":-17.381876,
+     "origen_longitude":-66.166978,
+     "destino_latitude":-17.427555,
+     "destino_longitude":-66.158133,
+  //    "origen_latitude":-17.785119,
+  //    "origen_longitude":-63.191289,
+  //    "destino_latitude":-17.793358,
+  //    "destino_longitude":-63.100239,
+  //    "origen_latitude":-17.38380081927847,
+  //    "origen_longitude":-66.17379214788572,
+  //    "destino_latitude":-17.381898176215643,
+  //    "destino_longitude":-66.1735960113515,
+     "tarifa_ideal":2.0,
+     "cliente_id":"1",
+     "tipo_vehiculo":"taxi"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

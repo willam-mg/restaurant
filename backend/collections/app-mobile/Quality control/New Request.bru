@@ -1,0 +1,22 @@
+meta {
+  name: New Request
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/testing/socketio
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "viaje_id": 1,
+      "chanel": "taxi/viaje-ofertar"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,25 @@
+meta {
+  name: index
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{BASE_URL}}/observaciones
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,35 @@
+meta {
+  name: store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/clientes
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+      "nombre_completo": "teresa mendoza",
+      "email": "teresa@gmail.com",
+      "celular": "75555555",
+      "player_id": "8980808908080808",
+      "src_foto": ""
+  }
+}
+
+script:post-response {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(201);
+  });
+}
+
+settings {
+  encodeUrl: true
+}
