@@ -1,7 +1,7 @@
 import axiosServices from 'utils/axios';
 
 export const loginRequest = async (email, password) => {
-  const response = await axiosServices.post('/auth/administrador', {
+  const response = await axiosServices.post('/auth/administrator', {
     email,
     password
   });

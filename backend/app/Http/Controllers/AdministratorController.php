@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Administrador;
+use App\Models\Administrator;
 use App\Services\AdministratorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class AdministratorController extends Controller
      * 
      * Display a listing of the resource.
      * 
-     * @group Administrador
+     * @group Administrator
      * @response scenario = success {
      *     "data": [
      *         {
@@ -82,7 +82,7 @@ class AdministratorController extends Controller
      * Create
      * 
      * Store a newly created resource in storage.
-     * @group Administrador
+     * @group Administrator
      * @authenticated
      * 
      * @bodyParam nombre_completo string
@@ -137,7 +137,7 @@ class AdministratorController extends Controller
      * Show
      * 
      * Display the specified resource.
-     * @group Administrador
+     * @group Administrator
      * @authenticated
      * 
      * @urlParam id int required
@@ -149,7 +149,7 @@ class AdministratorController extends Controller
      *     "email": "juanita@lahuerfanita.com"
      * }
      * @response 404 {
-     *     message": "No query results for model [App\\Models\\Administrador] 22",
+     *     message": "No query results for model [App\\Models\\Administrator] 22",
      * }
      */
     public function show($id)
@@ -161,7 +161,7 @@ class AdministratorController extends Controller
      * Update
      * 
      * Update the specified resource in storage.
-     * @group Administrador
+     * @group Administrator
      * @authenticated
      * 
      * @urlParam id int required
@@ -188,7 +188,7 @@ class AdministratorController extends Controller
     {
         DB::beginTransaction();
         try {
-            $administrador = Administrador::findOrFail($id);
+            $administrador = Administrator::findOrFail($id);
             $rules = [
                 'nombre_completo' => ['required', 'max:50'],
                 'src_foto' => ['nullable'],
@@ -216,7 +216,7 @@ class AdministratorController extends Controller
      * Delete
      * 
      * Remove the specified resource from storage.
-     * @group Administrador
+     * @group Administrator
      * @authenticated
      * 
      * @urlParam id int required
@@ -224,7 +224,7 @@ class AdministratorController extends Controller
      *     "message": "Eliminado",
      * }
      * @response 404 {
-     *     message": "No query results for model [App\\Models\\Administrador] 22",
+     *     message": "No query results for model [App\\Models\\Administrator] 22",
      * }
      */
     public function destroy($id)
@@ -243,7 +243,7 @@ class AdministratorController extends Controller
      * Restore
      * 
      * Restore the specified resource from storage.
-     * @group Administrador
+     * @group Administrator
      * @authenticated
      * 
      * @urlParam id int required
@@ -251,7 +251,7 @@ class AdministratorController extends Controller
      *     "message": "Restaurado",
      * }
      * @response 404 {
-     *     message": "No query results for model [App\\Models\\Administrador] 22",
+     *     message": "No query results for model [App\\Models\\Administrator] 22",
      * }
      */
     public function restore($id)
@@ -266,7 +266,7 @@ class AdministratorController extends Controller
      * Change password
      * 
      * Change password the specified resource
-     * @group Administrador
+     * @group Administrator
      * @authenticated
      * 
      * @urlParam id int required

@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import DashboardLayout from 'layout/Dashboard';
 import AuthGuard from '@/utils/authGuard';
+import AdministratorList from '../features/administrators/pages/administratorList';
 
 // render- Dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));
@@ -38,21 +39,25 @@ const MainRoutes = {
         }
       ]
     },
+    // {
+    //   path: 'typography',
+    //   element: <Typography />
+    // },
+    // {
+    //   path: 'color',
+    //   element: <Color />
+    // },
+    // {
+    //   path: 'shadow',
+    //   element: <Shadow />
+    // },
+    // {
+    //   path: 'sample-page',
+    //   element: <SamplePage />
+    // },
     {
-      path: 'typography',
-      element: <Typography />
-    },
-    {
-      path: 'color',
-      element: <Color />
-    },
-    {
-      path: 'shadow',
-      element: <Shadow />
-    },
-    {
-      path: 'sample-page',
-      element: <SamplePage />
+      path: 'administrators',
+      element: <AdministratorList />
     }
   ]
 };

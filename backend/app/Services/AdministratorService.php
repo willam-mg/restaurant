@@ -2,8 +2,8 @@
 namespace App\Services;
 
 use App\Enums\ChannelModuleEnum;
-use App\Http\Resources\AdministradorResource;
-use App\Models\Administrador;
+use App\Http\Resources\AdministratorResource;
+use App\Models\Administrator;
 use App\Models\User;
 use App\Services\Helpers\FileUploadService;
 use App\Services\Helpers\SocketioService;
@@ -15,37 +15,37 @@ class AdministratorService
 {
     public function __construct(
         private FileUploadService $fileUploadService,
-        private SocketioService $socketioService
+        // private SocketioService $socketioService
     ) {}
 
     public function list(array $dataRequest, int $perPage = 10): AnonymousResourceCollection
     {
-        $dataResult = Administrador::select('administradors.*')
-            ->join('users', 'administradors.user_id', '=', 'users.id')
+        $dataResult = Administrator::select('administrators.*')
+            ->join('users', 'administrators.user_id', '=', 'users.id')
             ->when(data_get($dataRequest, 'fieldSearch'), function ($query) use ($dataRequest) {
                 $query->where(function ($q) use ($dataRequest) {
-                    $q->where('administradors.nombre_completo', 'LIKE', '%' . data_get($dataRequest, 'fieldSearch') . '%')
+                    $q->where('administrators.nombre_completo', 'LIKE', '%' . data_get($dataRequest, 'fieldSearch') . '%')
                         ->orWhere('users.email', 'LIKE', '%' . data_get($dataRequest, 'fieldSearch') . '%');
                 });
             })
             ->when(data_get($dataRequest, 'nombre_completo'), function ($query) use ($dataRequest) {
-                $query->where('administradors.nombre_completo', 'LIKE', '%' . data_get($dataRequest, 'nombre_completo') . '%');
+                $query->where('administrators.nombre_completo', 'LIKE', '%' . data_get($dataRequest, 'nombre_completo') . '%');
             })
             ->when(data_get($dataRequest, 'email'), function ($query) use ($dataRequest) {
                 $query->where('users.email', 'LIKE', '%' . data_get($dataRequest, 'email') . '%');
             })
-            ->orderBy('administradors.id', 'DESC')
+            ->orderBy('administrators.id', 'DESC')
             ->paginate($perPage);
     
-        return AdministradorResource::collection($dataResult);
+        return AdministratorResource::collection($dataResult);
     }
 
-    public function find(int $id): ?AdministradorResource
+    public function find(int $id): ?AdministratorResource
     {
-        return new AdministradorResource(Administrador::findOrFail($id));
+        return new AdministratorResource(Administrator::findOrFail($id));
     }
 
-    public function create(Array $dataRequest, $photo = null): AdministradorResource
+    public function create(Array $dataRequest, $photo = null): AdministratorResource
     {
         try {
             DB::beginTransaction();
@@ -66,7 +66,7 @@ class AdministratorService
             }
 
             $dataRequest['user_id'] = $user->id;
-            $administrador = Administrador::create($dataRequest);
+            $administrador = Administrator::create($dataRequest);
 
             if ($photo) {
                 $administrador->src_foto = $this->fileUploadService->saveImage($photo, $administrador->id, 'administrator');
@@ -74,18 +74,18 @@ class AdministratorService
             }
 
             DB::commit();
-            $this->socketioService->emmitToAdministrator(ChannelModuleEnum::DASHBOARD->value, $administrador->toArray());
-            return new AdministradorResource($administrador);
+            // $this->socketioService->emmitToAdministrator(ChannelModuleEnum::DASHBOARD->value, $administrador->toArray());
+            return new AdministratorResource($administrador);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
     }
 
-    public function update(int $id, Array $dataRequest, $photo = null): AdministradorResource
+    public function update(int $id, Array $dataRequest, $photo = null): AdministratorResource
     {
         try {
-            $administrator = Administrador::findOrFail($id);
+            $administrator = Administrator::findOrFail($id);
 
             DB::beginTransaction();
             $administrator->update($dataRequest);
@@ -102,17 +102,17 @@ class AdministratorService
                 $administrator->save();
             }
             DB::commit();
-            return new AdministradorResource($administrator);
+            return new AdministratorResource($administrator);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
     }
 
-    public function changePassword(int $id, string $password): AdministradorResource
+    public function changePassword(int $id, string $password): AdministratorResource
     {
         try {
-            $administrator = Administrador::findOrFail($id);
+            $administrator = Administrator::findOrFail($id);
             $user = $administrator->user;
             DB::beginTransaction();
 
@@ -120,7 +120,7 @@ class AdministratorService
             $user->save();
             
             DB::commit();
-            return new AdministradorResource($administrator);
+            return new AdministratorResource($administrator);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
@@ -130,7 +130,7 @@ class AdministratorService
     public function delete(int $id): void
     {
         try {
-            $administrador = Administrador::findOrFail($id);
+            $administrador = Administrator::findOrFail($id);
             DB::beginTransaction();
             $administrador->user->delete();
             $administrador->delete();
@@ -144,7 +144,7 @@ class AdministratorService
     public function restore(int $id): void
     {
         try {
-            $branchOffice = Administrador::withTrashed()->findOrfail($id);        
+            $branchOffice = Administrator::withTrashed()->findOrfail($id);        
             DB::beginTransaction();
             $branchOffice->restore();
             DB::commit();

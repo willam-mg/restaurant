@@ -36,11 +36,11 @@ Route::prefix('auth')->group(function () {
     // Route::post('/send-code', [AuthController::class, 'sendCodeVerification']);
     // Route::post('/cliente', [AuthController::class, 'signInRider']);
     // Route::post('/taxi', [AuthController::class, 'singInDriver']);
-    Route::post('/administrador', [AuthController::class, 'signInAdmin']);
+    Route::post('/administrator', [AuthController::class, 'signInAdmin']);
 });
 
 // Administrador
-Route::middleware('auth:sanctum')->prefix('administradores')->group(function () {
+Route::middleware('auth:sanctum')->prefix('administrators')->group(function () {
     Route::apiResource('/', AdministratorController::class)
         ->parameters(['' => 'id']);
     Route::post('{id}/restore', [AdministratorController::class, 'restore']);
