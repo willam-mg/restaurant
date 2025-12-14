@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('method', ['cash', 'card', 'qr', 'transfer']);
             $table->decimal('amount', 10, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

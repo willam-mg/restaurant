@@ -1,11 +1,22 @@
 <?php
 
 use App\Http\Controllers\AccesorioController;
+use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\api\RegisterController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashMovementController;
+use App\Http\Controllers\CashRegisterController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MecanicoController;
 use App\Http\Controllers\OrdenController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
+use App\Models\CashMovement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,79 +30,82 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('admin')->group(function(){
-    Route::post('/login', [LoginController::class, 'admin']);
-    // Route::post('/forgot-password', 'UserController@forgotPassword');
+
+// Auth
+Route::prefix('auth')->group(function () {
+    // Route::post('/send-code', [AuthController::class, 'sendCodeVerification']);
+    // Route::post('/cliente', [AuthController::class, 'signInRider']);
+    // Route::post('/taxi', [AuthController::class, 'singInDriver']);
+    Route::post('/administrador', [AuthController::class, 'singInAdmin']);
 });
 
-// Route::post('/login', 'api\LoginController@pacienteMedico');
-// Route::post('/send-code', 'UserController@sendCodeToEmail');
-// Route::post('/validate-code', 'UserController@validateCode');
-// Route::middleware('auth:api')->post('/change-password/{id}', 'UserController@changePassword');
-
-Route::middleware('auth:sanctum')->prefix('admin')->group(function(){
-    Route::post('/register', [RegisterController::class, 'admin']);
-    Route::get('/list', [UserController::class, 'apiList']);
-    Route::get('/show/{id}', [UserController::class, 'apiShow']);
-    Route::put('/update/{id}', [UserController::class, 'apiUpdate']);
-    Route::patch('/update-email/{id}', [UserController::class, 'apiUpdateEmail']);
-    Route::patch('/update-password/{id}', [UserController::class, 'updatePassword']);
-    Route::delete('/delete/{id}', [UserController::class, 'delete']);
-    Route::delete('/restore/{id}', [UserController::class, 'restore']);
-    Route::post('/set-playerid', [UserController::class, 'updatePlayerId']);
+// Administrador
+Route::middleware('auth:sanctum')->prefix('administradores')->group(function () {
+    Route::apiResource('/', AdministratorController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [AdministratorController::class, 'restore']);
+    Route::patch('{id}/change-password', [AdministratorController::class, 'changePassword']);
 });
 
-//mecanicos
-Route::middleware('auth:sanctum')->prefix('/mecanico')->group(function(){
-    Route::post('/create', [MecanicoController::class, 'store']);
-    Route::get('/all', [MecanicoController::class, 'index']);
-    Route::get('/show/{id}', [MecanicoController::class, 'show']);
-    Route::put('/update/{id}', [MecanicoController::class, 'update']);
-    Route::delete('/delete/{id}', [MecanicoController::class, 'delete']);
-    Route::delete('/restore/{id}', [MecanicoController::class, 'restore']);
-    Route::get('/todos', [MecanicoController::class, 'todos']);
+// Tables
+Route::middleware('auth:sanctum')->prefix('tables')->group(function () {
+    Route::apiResource('/', TableController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [TableController::class, 'restore']);
 });
 
-//ordenes
-Route::middleware('auth:sanctum')->prefix('/orden')->group(function(){
-    Route::post('/create', [OrdenController::class, 'store']);
-    Route::get('/all', [OrdenController::class, 'index']);
-    Route::get('/show/{id}', [OrdenController::class, 'show']);
-    Route::put('/update/{id}', [OrdenController::class, 'update']);
-    Route::delete('/delete/{id}', [OrdenController::class, 'delete']);
-    Route::delete('/restore/{id}', [OrdenController::class, 'restore']);
-    Route::post('/detalle/create', [OrdenController::class, 'createDetalleRepuesto']);
-    // mano de obra
-    Route::post('/detalle/manoobra', [OrdenController::class, 'createDetalleManoObra']);
-    Route::put('/detalle/editmanoobra/{id}', [OrdenController::class, 'editDetalleManoObra']);
-    Route::delete('/detalle/deletemanoobra/{id}', [OrdenController::class, 'deleteDetalleManoObra']);
-    Route::delete('/detalle/restoremanoobra/{id}', [OrdenController::class, 'restoreDetalleManoObra']);
-    // repuestos
-    Route::post('/detalle/add-repuesto', [OrdenController::class, 'createDetalleRepuesto']);
-    Route::put('/detalle/edit-repuesto/{id}', [OrdenController::class, 'editDetalleRepuesto']);
-    Route::delete('/detalle/delete-repuesto/{id}', [OrdenController::class, 'deleteDetalleRepuesto']);
-    Route::delete('/detalle/restore-repuesto/{id}', [OrdenController::class, 'restoreDetalleRepuesto']);
-    // ordenes similares del vehiculo
-    Route::get('/similares/{id}', [OrdenController::class, 'ordenesSimilares']);
+// Cactegory
+Route::middleware('auth:sanctum')->prefix('categories')->group(function () {
+    Route::apiResource('/', CategoryController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [CategoryController::class, 'restore']);
 });
 
-//ordenes
-Route::middleware('auth:sanctum')->prefix('/accesorio')->group(function(){
-    Route::post('/create', [AccesorioController::class, 'store']);
-    Route::get('/all', [AccesorioController::class, 'index']);
-    Route::get('/todos', [AccesorioController::class, 'todos']);
-    Route::get('/show/{id}', [AccesorioController::class, 'show']);
-    Route::put('/update/{id}', [AccesorioController::class, 'update']);
-    Route::delete('/delete/{id}', [AccesorioController::class, 'delete']);
-    Route::delete('/restore/{id}', [AccesorioController::class, 'restore']);
+// Cactegory
+Route::middleware('auth:sanctum')->prefix('categories')->group(function () {
+    Route::apiResource('/', CategoryController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [CategoryController::class, 'restore']);
 });
 
-// //ordenes
-// Route::prefix('/accesorio')->group(function(){
-//     Route::middleware('auth:api')->post('/create', [AccesorioController::class, 'store']);
-//     Route::middleware('auth:api')->get('/all', [AccesorioController::class, 'index']);
-//     Route::middleware('auth:api')->get('/show/{id}', [AccesorioController::class, 'show']);
-//     Route::middleware('auth:api')->put('/update/{id}', [AccesorioController::class, 'update']);
-//     Route::middleware('auth:api')->delete('/delete/{id}', [AccesorioController::class, 'delete']);
-//     Route::middleware('auth:api')->delete('/restore/{id}', [AccesorioController::class, 'restore']);
-// });
+// CashRegister
+Route::middleware('auth:sanctum')->prefix('cash-registers')->group(function () {
+    Route::apiResource('/', CashRegisterController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [CashRegisterController::class, 'restore']);
+});
+
+// CashMovement
+Route::middleware('auth:sanctum')->prefix('cash-movements')->group(function () {
+    Route::apiResource('/', CashMovementController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [CashMovementController::class, 'restore']);
+});
+
+// Customer
+Route::middleware('auth:sanctum')->prefix('customers')->group(function () {
+    Route::apiResource('/', CustomerController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [CustomerController::class, 'restore']);
+});
+
+// Order
+Route::middleware('auth:sanctum')->prefix('orders')->group(function () {
+    Route::apiResource('/', OrderController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [OrderController::class, 'restore']);
+});
+
+// Payment
+Route::middleware('auth:sanctum')->prefix('payments')->group(function () {
+    Route::apiResource('/', PaymentController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [PaymentController::class, 'restore']);
+});
+
+// Product
+Route::middleware('auth:sanctum')->prefix('products')->group(function () {
+    Route::apiResource('/', ProductController::class)
+        ->parameters(['' => 'id']);
+    Route::post('{id}/restore', [ProductController::class, 'restore']);
+});

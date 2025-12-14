@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('closing_amount', 10, 2)->nullable();
             $table->enum('status', ['open', 'closed'])->default('open');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

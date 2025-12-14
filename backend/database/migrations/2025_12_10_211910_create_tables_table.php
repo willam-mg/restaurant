@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TableStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +15,10 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('status', ['free', 'occupied', 'reserved'])->default('free');
+            $table->enum('status', TableStatusEnum::values())
+                ->default(TableStatusEnum::FREE->value);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
