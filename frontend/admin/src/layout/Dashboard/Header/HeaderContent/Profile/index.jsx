@@ -29,6 +29,8 @@ import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import SettingOutlined from '@ant-design/icons/SettingOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import avatar1 from 'assets/images/users/avatar-1.png';
+import { logout } from 'services/auth';
+import { useNavigate } from 'react-router';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -69,6 +71,13 @@ export default function Profile() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    await logout();
+    navigate('/login');
+  }
 
   return (
     <Box sx={{ flexShrink: 0, ml: 'auto' }}>
@@ -126,8 +135,11 @@ export default function Profile() {
                       </Grid>
                       <Grid>
                         <Tooltip title="Logout">
-                          <IconButton size="large" sx={{ color: 'text.primary' }}>
-                            <LogoutOutlined />
+                          <IconButton 
+                            size="large" 
+                            sx={{ color: 'text.primary' }}
+                            onClick={logOut}>
+                            <LogoutOutlined/>
                           </IconButton>
                         </Tooltip>
                       </Grid>

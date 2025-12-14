@@ -151,26 +151,26 @@ class AuthController extends Controller
             $rules = [
                 'email' => 'required|email',
                 'password' => 'required',
-                'recaptchaToken' => 'required',
+                // 'recaptchaToken' => 'required',
             ];
             $this->validatorMake($request->all(), $rules);
 
-            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret' => config('recaptcha.secret_key'),
-                'response' => $request->recaptchaToken,
-                'remoteip' => $request->ip(),
-            ]);
+            // $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            //     'secret' => config('recaptcha.secret_key'),
+            //     'response' => $request->recaptchaToken,
+            //     'remoteip' => $request->ip(),
+            // ]);
         
-            $result = $response->json();
+            // $result = $response->json();
         
-            if (!($result['success'] ?? false) || ($result['score'] ?? 0) < 0.5) {
-                return response()->json(['error' => 'reCAPTCHA inválido'], 422);
-            }
+            // if (!($result['success'] ?? false) || ($result['score'] ?? 0) < 0.5) {
+            //     return response()->json(['error' => 'reCAPTCHA inválido'], 422);
+            // }
 
             $authValidation = $this->authService->signInAdmin($request->email, $request->password, $request->recaptchaToken);
 
             return response([
-                'administrador' => $authValidation['admin'],
+                'user' => $authValidation['administrator'],
                 'access_token' => $authValidation['access_token']
             ], 200);
         } catch (\Throwable $th) {

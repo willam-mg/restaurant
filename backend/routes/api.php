@@ -36,7 +36,7 @@ Route::prefix('auth')->group(function () {
     // Route::post('/send-code', [AuthController::class, 'sendCodeVerification']);
     // Route::post('/cliente', [AuthController::class, 'signInRider']);
     // Route::post('/taxi', [AuthController::class, 'singInDriver']);
-    Route::post('/administrador', [AuthController::class, 'singInAdmin']);
+    Route::post('/administrador', [AuthController::class, 'signInAdmin']);
 });
 
 // Administrador

@@ -13,7 +13,7 @@ class CreateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('administrators', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_completo', 50);
             $table->string('player_id', 250)->nullable();
@@ -23,7 +23,7 @@ class CreateAdminsTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::table('admins', function (Blueprint $table) {
+        Schema::table('administrators', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -35,6 +35,6 @@ class CreateAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('administrators');
     }
 }

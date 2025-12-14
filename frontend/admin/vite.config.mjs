@@ -24,7 +24,8 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '@ant-design/icons': path.resolve(__dirname, 'node_modules/@ant-design/icons')
+        '@ant-design/icons': path.resolve(__dirname, 'node_modules/@ant-design/icons'),
+        '@': path.resolve(__dirname, 'src')
         // Add more aliases as needed
       }
     },

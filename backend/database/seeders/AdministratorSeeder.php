@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AdministradorSeeder extends Seeder
+class AdministratorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class AdministradorSeeder extends Seeder
      * @return void
      */
     public function run() {
-        DB::table('admins')->insert([
+        DB::table('administrators')->insert([
             'id' => 1,
             'nombre_completo' => 'Juan Peres',
             'user_id' => 1,

@@ -27,6 +27,9 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 
+import { useNavigate } from 'react-router-dom';
+import { loginRequest } from 'services/auth';
+
 // ============================|| JWT - LOGIN ||============================ //
 
 export default function AuthLogin({ isDemo = false }) {
@@ -41,24 +44,45 @@ export default function AuthLogin({ isDemo = false }) {
     event.preventDefault();
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Formik
         initialValues={{
-          email: 'info@codedthemes.com',
-          password: '123456',
+          email: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          email: Yup.string()
+            .email('Must be a valid email')
+            .max(255)
+            .required('Email is required'),
           password: Yup.string()
             .required('Password is required')
             .test('no-leading-trailing-whitespace', 'Password cannot start or end with spaces', (value) => value === value.trim())
             .max(10, 'Password must be less than 10 characters')
         })}
+        onSubmit={async (values, { setErrors, setSubmitting }) => {
+          try {
+            const data = await loginRequest(values.email, values.password);
+
+            localStorage.setItem('token', data.access_token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
+            navigate('/dashboard/default'); // o la ruta principal de Mantis
+          } catch (error) {
+            setErrors({
+              submit: error.response?.data?.message || 'Error al iniciar sesión'
+            });
+          } finally {
+            setSubmitting(false);
+          }
+        }}
       >
-        {({ errors, handleBlur, handleChange, touched, values }) => (
-          <form noValidate>
+        {({ errors, handleBlur, handleChange, touched, values, handleSubmit }) => (
+          <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid size={12}>
                 <Stack sx={{ gap: 1 }}>
@@ -136,9 +160,23 @@ export default function AuthLogin({ isDemo = false }) {
               </Grid>
               <Grid size={12}>
                 <AnimateButton>
-                  <Button fullWidth size="large" variant="contained" color="primary">
+                  {/* <Button fullWidth size="large" variant="contained" color="primary">
+                    Login
+                  </Button> */}
+                  <Button
+                    type="submit"
+                    fullWidth
+                    size="large"
+                    variant="contained"
+                    color="primary"
+                  >
                     Login
                   </Button>
+                  {errors.submit && (
+                    <FormHelperText error>
+                      {errors.submit}
+                    </FormHelperText>
+                  )}
                 </AnimateButton>
               </Grid>
             </Grid>

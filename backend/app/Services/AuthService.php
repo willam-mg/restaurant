@@ -1,23 +1,12 @@
 <?php
 namespace App\Services;
 
-use App\Enums\ChannelModuleEnum;
-use App\Http\Resources\ClienteResource;
-use App\Http\Resources\QrResource;
-use App\Http\Resources\TaxiResource;
-use App\Models\Administrador;
-use App\Models\Cliente;
-use App\Models\CodeVerification;
-use App\Models\Qr;
-use App\Models\Taxi;
+use App\Http\Resources\AdministratorResource;
+use App\Models\Administrator;
 use App\Models\User;
-use App\Services\Helpers\FileUploadService;
 use App\Services\Helpers\SmsService;
 use App\Services\Helpers\SocketioService;
-use App\Services\RideUpdatedService;
 use App\Services\UserService;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -26,9 +15,7 @@ class AuthService
     public function __construct(
         private UserService $userService,
         private SocketioService $socketioService,
-        // private RideUpdatedService $rideUpdatedService,
         private SmsService $smsService,
-        // private FirebaseService $firebaseService
     ) {}
 
     // public function sendCodeVerification($celular)
@@ -167,13 +154,13 @@ class AuthService
                 ]);
             }
             
-            $admin = Administrador::where('user_id', $user->id)->first();
+            $admin = Administrator::where('user_id', $user->id)->first();
             if (!$admin) {
                 throw new \Exception('El email o contraseña son incorrectos');
             }
             $accessToken = $user->createToken('api_token')->plainTextToken;
             return [
-                'admin' => new ClienteResource($admin),
+                'administrator' => new AdministratorResource($admin),
                 'access_token' => $accessToken
             ];
         } catch (\Throwable $th) {
