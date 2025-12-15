@@ -14,8 +14,7 @@ export function useAdministrators() {
         const response = await AdministratorService.list(params);
         const data = response.data.map(item => new Administrator(item));
         setAdministrators(data);
-        console.log('response data', data);
-        setMeta(response.meta);           // 👈 paginación
+        setMeta(response.meta);
     } catch (err) {
         setError(err);
     } finally {
