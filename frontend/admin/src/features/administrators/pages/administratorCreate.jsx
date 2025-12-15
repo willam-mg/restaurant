@@ -84,7 +84,7 @@ export default function AdministratorCreate({ open, onClose, onCreated }) {
                 }
             }}
         >
-            {({ errors, handleBlur, handleChange, touched, values, handleSubmit }) => (
+            {({ errors, handleBlur, handleChange, touched, values, handleSubmit, isSubmitting }) => (
                 <form noValidate onSubmit={handleSubmit}>
                     <DialogContent dividers>
                         <Grid container spacing={3}>
@@ -160,8 +160,9 @@ export default function AdministratorCreate({ open, onClose, onCreated }) {
                         </Button>
                         <Button 
                             variant="contained"
-                            type='submit'>
-                            Guardar
+                            type='submit'
+                            disabled={isSubmitting}>
+                            {isSubmitting? 'Guardando': 'Guardar'}
                         </Button>
                     </DialogActions>
                 </form>
