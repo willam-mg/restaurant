@@ -86,9 +86,13 @@ class AdministratorService
     {
         try {
             $administrator = Administrator::findOrFail($id);
+            $user = $administrator->user;
 
             DB::beginTransaction();
             $administrator->update($dataRequest);
+            $user->update([
+                'email' => $dataRequest['email']
+            ]);
             
             if ($photo) {
                 $administrator->src_foto = $this->fileUploadService

@@ -75,6 +75,7 @@ export default function AdministratorCreate({ open, onClose, onCreated }) {
                 try {
                     await AdministratorService.create(values);
                     onCreated();
+                    onClose();
                 } catch (error) {
                     setErrors({
                         submit: error.response?.data?.message || 'Error al iniciar sesión'

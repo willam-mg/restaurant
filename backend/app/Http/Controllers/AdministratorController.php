@@ -186,7 +186,6 @@ class AdministratorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::beginTransaction();
         try {
             $administrador = Administrator::findOrFail($id);
             $rules = [
@@ -204,10 +203,8 @@ class AdministratorController extends Controller
                     $request->src_foto
                 );
 
-            DB::commit();
             return response()->json($administrator, 200);
         } catch (\Throwable $th) {
-            DB::rollBack();
             return response()->json(['message' => $th->getMessage()], 422);
         }
     }

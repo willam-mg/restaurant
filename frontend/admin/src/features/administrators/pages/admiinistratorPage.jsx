@@ -14,9 +14,8 @@ export default function AdministratorPage() {
         load();
     }, [load]);
 
-    const handleCreated = () => {
+    const handleRefreshData = () => {
         load();
-        setOpenCreate(false);
     };
 
     return (
@@ -52,13 +51,14 @@ export default function AdministratorPage() {
             <AdministratorCreate
                 open={openCreate}
                 onClose={() => setOpenCreate(false)}
-                onCreated = {handleCreated}
+                onCreated = {handleRefreshData}
             />
 
             <AdministratorList
                 administrators = {administrators}
                 loading = {loading}
                 error = {error}
+                onUpdated={handleRefreshData}
             />
         </>
     );

@@ -5,21 +5,38 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import React from 'react';
-import { EditOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EditOutlined } from '@ant-design/icons';
 import Button from '@mui/material/Button';
+import { useAdministrators } from '../hooks/useAdministrators';
+import AdministratorEdit from './administratorEdit';
+import IconButton from '@mui/material/IconButton';
 
 export default function AdministratorList({
   administrators,
   loading,
-  error
+  error,
+  onUpdated
 }) {
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error al cargar administradores</p>;
 
   return (
     <>
+      <AdministratorEdit
+          open={openUpdate}
+          modelTarget={selectedAdmin}
+          onClose={() => setOpenUpdate(false)}
+          onUpdated={() => {
+              onUpdated();
+              setOpenUpdate(false);
+              setSelectedAdmin(null);
+          }}
+      />
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -45,10 +62,22 @@ export default function AdministratorList({
                   align="left"
                   starticon={<pencilIcon/>}
                   >
-                  <Button>
+                  <IconButton
+                    onClick={()=>{
+                      setOpenUpdate(true);
+                      setSelectedAdmin(row);
+                    }}
+                    >
                     <EditOutlined />
-                    Editar
-                  </Button>
+                  </IconButton>
+                  <IconButton
+                    onClick={()=>{
+                      setOpenUpdate(true);
+                      setSelectedAdmin(row);
+                    }}
+                    >
+                    <DeleteOutlined />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
