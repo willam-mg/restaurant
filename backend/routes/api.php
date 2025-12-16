@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->prefix('administrators')->group(function () {
     Route::apiResource('/', AdministratorController::class)
         ->parameters(['' => 'id']);
     Route::post('{id}/restore', [AdministratorController::class, 'restore']);
+    Route::post('{id}/ban', [AdministratorController::class, 'ban']);
     Route::patch('{id}/change-password', [AdministratorController::class, 'changePassword']);
 });
 

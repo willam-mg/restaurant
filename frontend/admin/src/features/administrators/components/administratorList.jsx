@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import { useAdministrators } from '../hooks/useAdministrators';
 import AdministratorEdit from './administratorEdit';
 import IconButton from '@mui/material/IconButton';
+import AdministratorDialogDelete from './administratorDialogDelete';
 
 export default function AdministratorList({
   administrators,
@@ -19,6 +20,7 @@ export default function AdministratorList({
   onUpdated
 }) {
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
 
   if (loading) return <p>Cargando...</p>;
@@ -33,6 +35,16 @@ export default function AdministratorList({
           onUpdated={() => {
               onUpdated();
               setOpenUpdate(false);
+              setSelectedAdmin(null);
+          }}
+      />
+      <AdministratorDialogDelete
+          open={openDelete}
+          modelTarget={selectedAdmin}
+          onClose={() => setOpenDelete(false)}
+          onDeleted={() => {
+              onUpdated();
+              setOpenDelete(false);
               setSelectedAdmin(null);
           }}
       />
@@ -72,7 +84,7 @@ export default function AdministratorList({
                   </IconButton>
                   <IconButton
                     onClick={()=>{
-                      setOpenUpdate(true);
+                      setOpenDelete(true);
                       setSelectedAdmin(row);
                     }}
                     >

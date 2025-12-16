@@ -146,7 +146,10 @@ class AuthService
     public function signInAdmin($email, $password)
     {
         try {
-            $user = User::where('email', $email)->where('deleted_at', null)->first();
+            $user = User::where('email', $email)
+                ->where('deleted_at', null)
+                ->where('baned', false)
+                ->first();
 
             if (!$user || !Hash::check($password, $user->password)) {
                 throw ValidationException::withMessages([

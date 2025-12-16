@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import Button from '@mui/material/Button';
-import AdministratorCreate from './administratorCreate';
-import AdministratorList from './administratorList';
+import AdministratorCreate from '../components/administratorCreate';
+import AdministratorList from '../components/administratorList';
 import { useAdministrators } from '../hooks/useAdministrators';
 import Grid from '@mui/material/Grid';
 
@@ -10,13 +10,13 @@ export default function AdministratorPage() {
     const [openCreate, setOpenCreate] = useState(false);
     const {administrators,loading,error,load} = useAdministrators();  
 
-    useEffect(() => {
-        load();
-    }, [load]);
-
     const handleRefreshData = () => {
         load();
     };
+
+    useEffect(() => {
+        load();
+    }, [load]);
 
     return (
         <>

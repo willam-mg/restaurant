@@ -24,7 +24,12 @@ export const AdministratorService = {
 
   async remove(id) {
     const response = await axios.delete(`/administrators/${id}`);
-    return response.data;
+    return response.data.message;
+  },
+
+  async ban(id) {
+    const response = await axios.delete(`/administrators/${id}/ban`);
+    return response.data.message;
   },
 
   async restore(id) {

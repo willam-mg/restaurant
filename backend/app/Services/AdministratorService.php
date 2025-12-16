@@ -145,6 +145,20 @@ class AdministratorService
         }
     }
 
+    public function ban(int $id): void
+    {
+        try {
+            $administrador = Administrator::findOrFail($id);
+            DB::beginTransaction();
+            $administrador->user->bloqued = true;
+            $administrador->user->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
     public function restore(int $id): void
     {
         try {
