@@ -4,5 +4,6 @@ export class Administrator {
     this.nombre_completo = data.nombre_completo ?? '';
     this.email = data.email ?? '';
     this.password = data.password ?? '';
+    this.bloqued = data.bloqued ?? '';
   }
 }

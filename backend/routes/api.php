@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->prefix('administrators')->group(function () {
         ->parameters(['' => 'id']);
     Route::post('{id}/restore', [AdministratorController::class, 'restore']);
     Route::post('{id}/ban', [AdministratorController::class, 'ban']);
+    Route::post('{id}/unban', [AdministratorController::class, 'unBan']);
     Route::patch('{id}/change-password', [AdministratorController::class, 'changePassword']);
 });
 

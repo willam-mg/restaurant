@@ -23,6 +23,7 @@ class AdministratorResource extends JsonResource
             'foto_thumbnail_sm' => $this->foto_thumbnail_sm,
             'user_id' => $this->user_id,
             'email' => $this->user->email,
+            'bloqued' => $this->user->bloqued,
         ];
     }
 }

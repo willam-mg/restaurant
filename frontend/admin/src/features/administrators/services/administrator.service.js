@@ -28,7 +28,12 @@ export const AdministratorService = {
   },
 
   async ban(id) {
-    const response = await axios.delete(`/administrators/${id}/ban`);
+    const response = await axios.post(`/administrators/${id}/ban`);
+    return response.data.message;
+  },
+
+  async unBan(id) {
+    const response = await axios.post(`/administrators/${id}/unban`);
     return response.data.message;
   },
 

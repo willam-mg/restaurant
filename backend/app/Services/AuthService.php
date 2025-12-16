@@ -148,7 +148,7 @@ class AuthService
         try {
             $user = User::where('email', $email)
                 ->where('deleted_at', null)
-                ->where('baned', false)
+                ->where('bloqued', false)
                 ->first();
 
             if (!$user || !Hash::check($password, $user->password)) {

@@ -325,9 +325,32 @@ class AdministratorController extends Controller
      */
     public function ban($id)
     {
-        $this->administratorService->ban($id);
+        $this->administratorService->bloquedHandler($id, true);
         return response()->json([
             'message' => 'Bloqueado'
+        ], 200);
+    }
+   
+    /**
+     * Unban user
+     * 
+     * Ban the specified resource from storage.
+     * @group Administrator
+     * @authenticated
+     * 
+     * @urlParam id int required
+     * @response 200 {
+     *     "message": "Restaurado",
+     * }
+     * @response 404 {
+     *     message": "No query results for model [App\\Models\\Administrator] 22",
+     * }
+     */
+    public function unBan($id)
+    {
+        $this->administratorService->bloquedHandler($id, false);
+        return response()->json([
+            'message' => 'Desbloqueado'
         ], 200);
     }
 }

@@ -6,12 +6,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import React, { useState } from 'react';
-import { DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EditOutlined, RedoOutlined, StopOutlined } from '@ant-design/icons';
 import Button from '@mui/material/Button';
 import { useAdministrators } from '../hooks/useAdministrators';
 import AdministratorEdit from './administratorEdit';
 import IconButton from '@mui/material/IconButton';
 import AdministratorDialogDelete from './administratorDialogDelete';
+import AdministratorDialogBan from './administratorDialogBan';
 
 export default function AdministratorList({
   administrators,
@@ -21,7 +22,9 @@ export default function AdministratorList({
 }) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openBan, setOpenBan] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [toRestore, setToRestore] = useState(false);
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error al cargar administradores</p>;
@@ -38,13 +41,27 @@ export default function AdministratorList({
               setSelectedAdmin(null);
           }}
       />
+
       <AdministratorDialogDelete
           open={openDelete}
+          toRestore={toRestore}
           modelTarget={selectedAdmin}
           onClose={() => setOpenDelete(false)}
-          onDeleted={() => {
+          onUpdated={() => {
               onUpdated();
               setOpenDelete(false);
+              setSelectedAdmin(null);
+          }}
+      />
+
+      <AdministratorDialogBan
+          open={openBan}
+          toRestore={toRestore}
+          modelTarget={selectedAdmin}
+          onClose={() => setOpenBan(false)}
+          onUpdated={() => {
+              onUpdated();
+              setOpenBan(false);
               setSelectedAdmin(null);
           }}
       />
@@ -90,6 +107,27 @@ export default function AdministratorList({
                     >
                     <DeleteOutlined />
                   </IconButton>
+                  {!row.bloqued ? (
+                    <IconButton
+                      onClick={()=>{
+                        setOpenBan(true);
+                        setToRestore(false);
+                        setSelectedAdmin(row);
+                      }}
+                      >
+                      <StopOutlined />
+                    </IconButton>
+                  ): (
+                    <IconButton
+                      onClick={()=>{
+                        setOpenBan(true);
+                        setToRestore(true);
+                        setSelectedAdmin(row);
+                      }}
+                      >
+                      <RedoOutlined />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

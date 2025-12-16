@@ -7,28 +7,33 @@ import DialogActions from '@mui/material/DialogActions';
 import Alert from '@mui/material/Alert';
 import { AdministratorService } from '../services/administrator.service';
 
-export default function AdministratorDialogDelete({
+export default function AdministratorDialogBan({
   modelTarget,
+  toRestore,
   open,
   onClose,
-  onDeleted
+  onUpdated
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   if (!modelTarget) return null;
 
-  const handleDelete = async () => {
+  const handleBlock = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      await AdministratorService.remove(modelTarget.id);
-      onDeleted();
+      if (toRestore) {
+        await AdministratorService.unBan(modelTarget.id);
+      } else {
+        await AdministratorService.ban(modelTarget.id);
+      }
+      onUpdated();
       onClose();
     } catch (err) {
       console.log(err);
-      setError(err.response?.data?.message || 'Error al eliminar administrador');
+      setError(err.response?.data?.message || 'Error al bloquear administrador');
     } finally {
       setLoading(false);
     }
@@ -36,7 +41,7 @@ export default function AdministratorDialogDelete({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
-      <DialogTitle>Eliminar</DialogTitle>
+      <DialogTitle>{toRestore? 'Desbloquear': 'Bloquear'}</DialogTitle>
 
       <DialogContent>
         {error && (
@@ -45,9 +50,7 @@ export default function AdministratorDialogDelete({
           </Alert>
         )}
 
-        ¿Estás seguro de eliminar este elemento?
-        <br />
-        Esta acción no se puede deshacer.
+        ¿Estás seguro de {toRestore? 'desbloquear': 'bloquear'} este elemento?
       </DialogContent>
 
       <DialogActions>
@@ -57,11 +60,13 @@ export default function AdministratorDialogDelete({
 
         <Button
           variant="contained"
-          color="error"
-          onClick={handleDelete}
+          color={toRestore ? 'success' : 'primary'}
+          onClick={handleBlock}
           disabled={loading}
         >
-          {loading ? 'Eliminando...' : 'Eliminar'}
+          {loading
+            ? (toRestore ? 'Desbloqueando...' : 'Bloqueando...')
+            : (toRestore ? 'Desbloquear' : 'Bloquear')}
         </Button>
       </DialogActions>
     </Dialog>
