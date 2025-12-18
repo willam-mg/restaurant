@@ -6,18 +6,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import React, { useState } from 'react';
-import { DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EditOutlined, RedoOutlined, StopOutlined } from '@ant-design/icons';
-import Button from '@mui/material/Button';
-import { useAdministrators } from '../hooks/useAdministrators';
-import AdministratorEdit from './administratorEdit';
+import { DeleteOutlined, EditOutlined, RedoOutlined, StopOutlined } from '@ant-design/icons';
+import TableEdit from './tableEdit';
 import IconButton from '@mui/material/IconButton';
-import AdministratorDialogDelete from './administratorDialogDelete';
-import AdministratorDialogBan from './administratorDialogBan';
+import TableDialogDelete from './tableDialogDelete';
+import TableDialogBan from './tableDialogBan';
 
-export default function AdministratorList({
-  administrators,
-  loading,
-  error,
+export default function TableList({
+  tables,
   onUpdated
 }) {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -26,12 +22,9 @@ export default function AdministratorList({
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [toRestore, setToRestore] = useState(false);
 
-  // if (loading) return <p>Cargando...</p>;
-  // if (error) return <p>Error al cargar administradores</p>;
-
   return (
     <>
-      <AdministratorEdit
+      <TableEdit
           open={openUpdate}
           modelTarget={selectedAdmin}
           onClose={() => setOpenUpdate(false)}
@@ -42,7 +35,7 @@ export default function AdministratorList({
           }}
       />
 
-      <AdministratorDialogDelete
+      <TableDialogDelete
           open={openDelete}
           toRestore={toRestore}
           modelTarget={selectedAdmin}
@@ -54,38 +47,26 @@ export default function AdministratorList({
           }}
       />
 
-      <AdministratorDialogBan
-          open={openBan}
-          toRestore={toRestore}
-          modelTarget={selectedAdmin}
-          onClose={() => setOpenBan(false)}
-          onUpdated={() => {
-              onUpdated();
-              setOpenBan(false);
-              setSelectedAdmin(null);
-          }}
-      />
-
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Numero</TableCell>
+              <TableCell>Estado</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {administrators.map((row) => (
+            {tables.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.nombre_completo}
+                  {row.name}
                 </TableCell>
                 <TableCell align="left">
-                  {row.email}
+                  {row.status}
                 </TableCell>
                 <TableCell 
                   align="left"
@@ -107,27 +88,6 @@ export default function AdministratorList({
                     >
                     <DeleteOutlined />
                   </IconButton>
-                  {!row.bloqued ? (
-                    <IconButton
-                      onClick={()=>{
-                        setOpenBan(true);
-                        setToRestore(false);
-                        setSelectedAdmin(row);
-                      }}
-                      >
-                      <StopOutlined />
-                    </IconButton>
-                  ): (
-                    <IconButton
-                      onClick={()=>{
-                        setOpenBan(true);
-                        setToRestore(true);
-                        setSelectedAdmin(row);
-                      }}
-                      >
-                      <RedoOutlined />
-                    </IconButton>
-                  )}
                 </TableCell>
               </TableRow>
             ))}

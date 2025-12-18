@@ -1,9 +1,11 @@
 // assets
-import { ChromeOutlined, DashboardOutlined, QuestionOutlined } from '@ant-design/icons';
+import { UserOutlined, TableOutlined, ChromeOutlined, DashboardOutlined, QuestionOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
+  UserOutlined,
   ChromeOutlined,
+  TableOutlined,
   QuestionOutlined,
   DashboardOutlined
 };
@@ -28,7 +30,14 @@ const administrators = {
       title: 'Administradores',
       type: 'item',
       url: '/administrators',
-      icon: icons.ChromeOutlined
+      icon: icons.UserOutlined
+    },
+    {
+      id: 'tables-page',
+      title: 'Mesas',
+      type: 'item',
+      url: '/tables',
+      icon: icons.TableOutlined
     },
     // {
     //   id: 'administrators-create',

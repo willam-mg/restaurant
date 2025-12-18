@@ -5,6 +5,7 @@ import Loadable from 'components/Loadable';
 import DashboardLayout from 'layout/Dashboard';
 import AuthGuard from '@/utils/authGuard';
 import AdministratorPage from '../features/administrators/pages/admiinistratorPage';
+import TablePage from '../features/tables/pages/tablePage';
 
 // render- Dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));
@@ -58,6 +59,10 @@ const MainRoutes = {
     {
       path: 'administrators',
       element: <AdministratorPage />
+    },
+    {
+      path: 'tables',
+      element: <TablePage />
     }
   ]
 };
